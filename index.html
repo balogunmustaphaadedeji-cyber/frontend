@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12372a">
+  <title>Smart Office | Attendance</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">SO</div><div><strong>Smart Office</strong><small>Attendance System</small></div></div>
+    <nav>
+      <a class="nav-link active" href="#dashboard">▦ <span>Dashboard</span></a>
+      <a class="nav-link" href="#recognition">◉ <span>Face Recognition</span></a>
+      <a class="nav-link" href="#people">♙ <span>People</span></a>
+      <a class="nav-link" href="#records">▤ <span>Attendance Records</span></a>
+      <a class="nav-link" href="#settings">⚙ <span>Connection Settings</span></a>
+    </nav>
+    <div class="sidebar-note"><span class="status-dot"></span><span id="sidebarStatus">API not checked</span></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><p class="eyebrow">SMART OFFICE / OVERVIEW</p><h1>Attendance dashboard</h1><p class="muted">Monitor your system and manage attendance from one place.</p></div>
+      <div class="top-actions"><span class="date-pill" id="todayDate">Today</span><button class="btn btn-outline" id="checkApiBtn">Check API</button></div>
+    </header>
+
+    <section class="notice" id="apiNotice">
+      <div class="notice-icon">i</div><div><strong>Connect your backend</strong><p>Enter your Render API URL under Connection Settings, then select “Check API”. This dashboard does not create attendance records until the required API endpoints are implemented.</p></div>
+    </section>
+
+    <section class="stats" id="dashboard">
+      <article class="stat-card"><div class="stat-top"><span>Registered people</span><span class="stat-icon">♙</span></div><strong>—</strong><small>Waiting for people API</small></article>
+      <article class="stat-card"><div class="stat-top"><span>Present today</span><span class="stat-icon">✓</span></div><strong>—</strong><small>Waiting for attendance API</small></article>
+      <article class="stat-card"><div class="stat-top"><span>Attendance rate</span><span class="stat-icon">↗</span></div><strong>—</strong><small>Calculated from real records</small></article>
+      <article class="stat-card"><div class="stat-top"><span>API status</span><span class="stat-icon">⌁</span></div><strong id="apiStat">Unknown</strong><small id="apiSub">Check connection to begin</small></article>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel camera-panel" id="recognition">
+        <div class="panel-heading"><div><h2>Camera preview</h2><p class="muted">Use your browser camera to preview the scene.</p></div><span class="tag" id="cameraTag">Camera off</span></div>
+        <div class="camera-box">
+          <video id="camera" autoplay playsinline muted></video>
+          <div class="camera-placeholder" id="cameraPlaceholder"><div class="camera-symbol">◉</div><strong>Camera preview</strong><span>Allow camera access when prompted.</span></div>
+          <div class="camera-overlay"><span class="rec-dot"></span> LIVE PREVIEW</div>
+        </div>
+        <div class="camera-actions"><button class="btn btn-primary" id="startCamera">Start camera</button><button class="btn btn-outline" id="stopCamera" disabled>Stop camera</button></div>
+        <p class="helper" id="cameraMessage">Camera preview only. Face recognition is not connected to this webpage yet.</p>
+      </article>
+
+      <article class="panel" id="settings">
+        <div class="panel-heading"><div><h2>Backend connection</h2><p class="muted">Connect this dashboard to your Render API.</p></div><span class="status-pill" id="connectionPill">Not checked</span></div>
+        <label for="apiUrl">Render API URL</label>
+        <input id="apiUrl" type="url" placeholder="https://your-api-name.onrender.com" autocomplete="url">
+        <div class="form-actions"><button class="btn btn-primary" id="saveUrl">Save URL</button><button class="btn btn-outline" id="testUrl">Test connection</button></div>
+        <div class="connection-result" id="connectionResult" role="status">No connection test performed.</div>
+        <div class="endpoint-list"><strong>Expected checks</strong><div><code>GET /health</code><span>Health check</span></div><div><code>GET /</code><span>API information</span></div></div>
+      </article>
+    </section>
+
+    <section class="panel lower-panel" id="records">
+      <div class="panel-heading"><div><h2>Recent attendance</h2><p class="muted">Real records will appear here after the attendance API is added.</p></div><button class="btn btn-outline" id="exportBtn">Export CSV</button></div>
+      <div class="empty-state"><div class="empty-icon">▤</div><strong>No attendance records loaded</strong><p>This starter dashboard does not invent sample records. Connect the backend and implement the records endpoint to populate this table.</p></div>
+    </section>
+
+    <section class="panel lower-panel" id="people">
+      <div class="panel-heading"><div><h2>People</h2><p class="muted">Registration controls will be enabled when the backend supports them.</p></div><button class="btn btn-outline" disabled>Register person</button></div>
+      <div class="feature-row"><div class="feature-icon">♙</div><div><strong>Person registration</strong><p class="muted">The existing Python registration script uses a local webcam. The web version needs a dedicated API endpoint to accept and process a browser-captured image.</p></div><span class="tag tag-muted">Not connected</span></div>
+    </section>
+    <footer>Smart Office Attendance System <span>Static web dashboard · API required for live data</span></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
